@@ -3,6 +3,9 @@ using System.Data.SqlClient;
 
 namespace ProyectoDiWork.DataBase
 {
+    /// <summary>
+    /// class DataBase
+    /// </summary>
     public class DataBase
     {
         private static string ConexionSQL = System.Environment.GetEnvironmentVariable("ConexionSQL", EnvironmentVariableTarget.Process);
