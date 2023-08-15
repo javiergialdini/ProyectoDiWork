@@ -48,7 +48,7 @@
     public class RepuestoPorMarca
     {
         /// <summary>
-        /// Marca
+        /// Modelo
         /// </summary>
         public string Marca { get; set; }
         /// <summary>

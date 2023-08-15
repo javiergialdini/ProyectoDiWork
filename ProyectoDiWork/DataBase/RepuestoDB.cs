@@ -2,6 +2,7 @@
 using ProyectoDiWork.Modelos;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace ProyectoDiWork.DataBase
 {
@@ -51,6 +52,44 @@ namespace ProyectoDiWork.DataBase
         }
 
         /// <summary>
+        /// Ejecuta stored procedure spRepuestoMasUtilizadoPorModeloListar
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<RepuestoPorModelo> spRepuestoMasUtilizadoPorModeloListar()
+        {
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spRepuestoMasUtilizadoPorModeloListar";
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                List<RepuestoPorModelo> resultado = new List<RepuestoPorModelo>();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        RepuestoPorModelo data = new RepuestoPorModelo();
+                        data.Modelo = dr["Modelo"].ToString();
+                        data.IdRepuesto = Convert.ToInt32(dr["Id"]);
+                        data.Nombre = dr["Nombre"].ToString();
+                        data.Cantidad = Convert.ToInt32(dr["cantidad"]);
+
+                        resultado.Add(data);
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en sp spRepuestoMasUtilizadoPorModeloListar: " + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// sp para retornar repuesto mas utilizado por marca
         /// </summary>
         /// <param name="marca"></param>
@@ -86,6 +125,44 @@ namespace ProyectoDiWork.DataBase
             catch (Exception ex)
             {
                 throw new Exception("Error en sp spRepuestoMasUtilizadoPorMarca: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Ejecuta stored procedure spRepuestoMasUtilizadoPorMarcaListar
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<RepuestoPorMarca> spRepuestoMasUtilizadoPorMarcaListar()
+        {
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spRepuestoMasUtilizadoPorMarcaListar";
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                List<RepuestoPorMarca> resultado = new List<RepuestoPorMarca>();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        RepuestoPorMarca data = new RepuestoPorMarca();
+                        data.Marca = dr["Marca"].ToString();
+                        data.IdRepuesto = Convert.ToInt32(dr["Id"]);
+                        data.Nombre = dr["Nombre"].ToString();
+                        data.Cantidad = Convert.ToInt32(dr["cantidad"]);
+                        
+                        resultado.Add(data);
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en sp spRepuestoMasUtilizadoPorModeloListar: " + ex.Message);
             }
         }
 

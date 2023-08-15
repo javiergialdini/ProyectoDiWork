@@ -31,7 +31,7 @@ namespace ProyectoDiWork.Controllers
         /// </summary>
         /// <param name="modelo"></param>
         /// <returns></returns>
-        [HttpGet("Modelo/MasUtilizado")]
+        [HttpGet("ModeloVehi/MasUtilizado")]
         [ProducesResponseType(typeof(RepuestoPorModelo), StatusCodes.Status200OK)]
         public async Task<IActionResult> ObtenerMayorPorModelo(string modelo)
         {
@@ -44,11 +44,24 @@ namespace ProyectoDiWork.Controllers
         }
 
         /// <summary>
+        /// Lista de repuesto mas utilizado por modelo
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("ModeloVehi/ListarMasUtilizado")]
+        [ProducesResponseType(typeof(List<RepuestoPorModelo>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListarMayorPorModelo()
+        {
+            List<RepuestoPorModelo> respuesta = await RepuestoBL.ListarMayorPorModelo();
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
         /// Obtiene el repuesto mas utilizado para el modelo
         /// </summary>
-        /// <param name="modelo"></param>
+        /// <param name="marca"></param>
         /// <returns></returns>
-        [HttpGet("Marca/MasUtilizado")]
+        [HttpGet("MarcaVehi/MasUtilizado")]
         [ProducesResponseType(typeof(RepuestoPorMarca), StatusCodes.Status200OK)]
         public async Task<IActionResult> ObtenerMayorPorMarca(string marca)
         {
@@ -56,6 +69,19 @@ namespace ProyectoDiWork.Controllers
                 return BadRequest("Marca requerido");
 
             RepuestoPorMarca respuesta = await RepuestoBL.ObtenerMayorPorMarca(marca);
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Lista de repuesto mas utilizado por marca
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("MarcaVehi/ListarMasUtilizado")]
+        [ProducesResponseType(typeof(List<RepuestoPorMarca>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListarMayorPorMarca()
+        {
+            List<RepuestoPorMarca> respuesta = await RepuestoBL.ListarMayorPorMarca();
 
             return Ok(respuesta);
         }

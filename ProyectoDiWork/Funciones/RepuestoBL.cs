@@ -26,6 +26,19 @@ namespace ProyectoDiWork.Funciones
         }
 
         /// <summary>
+        /// Lista el repuesto mas utilizado por modelo
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<RepuestoPorModelo>> ListarMayorPorModelo()
+        {
+            List<RepuestoPorModelo> resultado = new List<RepuestoPorModelo>();
+
+            await Task.Run(() => { resultado = RepuestoDB.spRepuestoMasUtilizadoPorModeloListar(); });
+
+            return resultado;
+        }
+
+        /// <summary>
         /// Obtiene el repuesto mas utilizado para el marca
         /// </summary>
         /// <param name="marca"></param>
@@ -35,6 +48,19 @@ namespace ProyectoDiWork.Funciones
             RepuestoPorMarca resultado = new RepuestoPorMarca();
 
             await Task.Run(() => { resultado = RepuestoDB.spRepuestoMasUtilizadoPorMarca(marca); });
+
+            return resultado;
+        }
+
+        /// <summary>
+        /// Lista el repuesto mas utilizado por marca
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<RepuestoPorMarca>> ListarMayorPorMarca()
+        {
+            List<RepuestoPorMarca> resultado = new List<RepuestoPorMarca>();
+
+            await Task.Run(() => { resultado = RepuestoDB.spRepuestoMasUtilizadoPorMarcaListar(); });
 
             return resultado;
         }
