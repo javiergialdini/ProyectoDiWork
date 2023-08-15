@@ -12,6 +12,19 @@ namespace ProyectoDiWork.Funciones
         #region LECTURA
 
         /// <summary>
+        /// Genera una lista de repuestos
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<Repuesto>> ListarRepuestos()
+        {
+            List<Repuesto> resulado = new List<Repuesto>();
+
+            await Task.Run(() => { resulado = RepuestoDB.spRepuestosLitar(); });
+
+            return resulado;
+        }
+
+        /// <summary>
         /// Obtiene el repuesto mas utilizado para el modelo
         /// </summary>
         /// <param name="modelo"></param>

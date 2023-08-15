@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using ProyectoDiWork.Funciones;
 using ProyectoDiWork.Modelos;
+using System.Diagnostics;
 
 namespace ProyectoDiWork.Controllers
 {
@@ -25,6 +26,48 @@ namespace ProyectoDiWork.Controllers
         }
 
         #region LECTURA
+
+        /// <summary>
+        /// Genera lista de repuestos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Listar")]
+        [ProducesResponseType(typeof(List<Repuesto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListarRepuestos()
+        {
+            List<Repuesto> respuesta = new List<Repuesto>();
+
+            string idCache = "repuestosCache";
+
+            if(!_cache.TryGetValue(idCache, out respuesta))
+            {
+                respuesta = await RepuestoBL.ListarRepuestos();
+
+                // Set cache options.
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    // Keep in cache for this time, reset time if accessed.
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(4));
+                cacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(8));
+                cacheEntryOptions.Size = 1;
+
+                if(respuesta != null && respuesta.Count() > 0)
+                {
+                    try
+                    {
+                        // Save data in cache.
+                        _cache.Set(idCache, respuesta, cacheEntryOptions);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al generar cache de repuestos: " + ex.Message);
+                    }
+                }
+
+            }
+
+            return Ok(respuesta);
+        }
+
 
         /// <summary>
         /// Obtiene el repuesto mas utilizado para el modelo

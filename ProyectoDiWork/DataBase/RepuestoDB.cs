@@ -12,6 +12,43 @@ namespace ProyectoDiWork.DataBase
     public class RepuestoDB
     {
         #region LECTURA
+
+        /// <summary>
+        /// Ejecuta stored procedure spRepuestosLitar
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<Repuesto> spRepuestosLitar()
+        {
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spRepuestosListar";
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                List<Repuesto> resultado = new List<Repuesto>(); 
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        Repuesto data = new Repuesto();
+                        data.Id = Convert.ToInt32(dr["Id"]);
+                        data.Nombre = dr["Nombre"].ToString();
+                        data.Precio = Convert.ToDecimal(dr["Precio"]);
+                        resultado.Add(data);
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en sp spRepuestoMasUtilizadoPorModelo: " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// sp para retornar repuesto mas utilizado por modelo
         /// </summary>
