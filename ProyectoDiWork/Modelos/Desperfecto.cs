@@ -25,5 +25,9 @@
         /// Tiempo en días de trabajo
         /// </summary>
         public int Tiempo { get; set; }
+        /// <summary>
+        /// Lisa de repuestos
+        /// </summary>
+        public List<Repuesto> Repuestos { get; set; }
     }
 }

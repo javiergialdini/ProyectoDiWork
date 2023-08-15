@@ -29,5 +29,39 @@
         /// id del vehiculo
         /// </summary>
         public int idVehiulo { get; set; }
+        /// <summary>
+        /// Lista de desperfectos
+        /// </summary>
+        public List<Desperfecto> Desperfectos { get; set; }
+    }
+
+    /// <summary>
+    /// Clase para cargar trabajo para un automovil
+    /// </summary>
+    public class TrabajoAutomovilNuevo
+    {
+        /// <summary>
+        /// Presupuesto
+        /// </summary>
+        public Presupuesto Presupuesto { get; set; }
+        /// <summary>
+        /// Datos del automovil
+        /// </summary>
+        public Automovil Automovil { get; set; }
+    }
+
+    /// <summary>
+    /// Clase para cargar un trabaj a una moto
+    /// </summary>
+    public class TrabajoMotoNuevo
+    {
+        /// <summary>
+        /// Presupuesto
+        /// </summary>
+        public Presupuesto Presupuesto { get; set; }
+        /// <summary>
+        /// Datos de la moto
+        /// </summary>
+        public Moto Moto { get; set; }
     }
 }

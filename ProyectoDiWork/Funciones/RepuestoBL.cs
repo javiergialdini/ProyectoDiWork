@@ -8,7 +8,40 @@ namespace ProyectoDiWork.Funciones
     /// </summary>
     public class RepuestoBL
     {
-#pragma warning disable CS1998
+
+        #region LECTURA
+
+        /// <summary>
+        /// Obtiene el repuesto mas utilizado para el modelo
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        public static async Task<RepuestoPorModelo> ObtenerMayorPorModelo(string modelo)
+        {
+            RepuestoPorModelo resultado = new RepuestoPorModelo();
+
+            await Task.Run(() => { resultado = RepuestoDB.spRepuestoMasUtilizadoPorModelo(modelo);});
+
+            return resultado;
+        }
+
+        /// <summary>
+        /// Obtiene el repuesto mas utilizado para el marca
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <returns></returns>
+        public static async Task<RepuestoPorMarca> ObtenerMayorPorMarca(string marca)
+        {
+            RepuestoPorMarca resultado = new RepuestoPorMarca();
+
+            await Task.Run(() => { resultado = RepuestoDB.spRepuestoMasUtilizadoPorMarca(marca); });
+
+            return resultado;
+        }
+
+        #endregion
+
+        #region ESCRITURA
         /// <summary>
         /// Metodo para generar lista de repuestas desde la ejecución del sp Massive Charge
         /// </summary>
@@ -17,10 +50,10 @@ namespace ProyectoDiWork.Funciones
         {
             List<Repuesto> resultado = new List<Repuesto>();
 
-            resultado = RepuestoDB.spMassiveCharge();
+            await Task.Run(() => { resultado = RepuestoDB.spMassiveCharge(); });
 
             return resultado;
         }
-#pragma warning restore CS1998
+        #endregion
     }
 }

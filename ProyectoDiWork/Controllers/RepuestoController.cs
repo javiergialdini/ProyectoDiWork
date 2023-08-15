@@ -24,6 +24,44 @@ namespace ProyectoDiWork.Controllers
             _cache = cache;
         }
 
+        #region LECTURA
+
+        /// <summary>
+        /// Obtiene el repuesto mas utilizado para el modelo
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        [HttpGet("Modelo/MasUtilizado")]
+        [ProducesResponseType(typeof(RepuestoPorModelo), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObtenerMayorPorModelo(string modelo)
+        {
+            if (modelo == "")
+                return BadRequest("Modelo requerido");
+
+            RepuestoPorModelo respuesta = await RepuestoBL.ObtenerMayorPorModelo(modelo);
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Obtiene el repuesto mas utilizado para el modelo
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        [HttpGet("Marca/MasUtilizado")]
+        [ProducesResponseType(typeof(RepuestoPorMarca), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObtenerMayorPorMarca(string marca)
+        {
+            if (marca == "")
+                return BadRequest("Marca requerido");
+
+            RepuestoPorMarca respuesta = await RepuestoBL.ObtenerMayorPorMarca(marca);
+
+            return Ok(respuesta);
+        }
+
+        #endregion
+
         #region ESCRITURA
 
         /// <summary>

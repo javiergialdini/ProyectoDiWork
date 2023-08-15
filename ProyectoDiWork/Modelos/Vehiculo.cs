@@ -41,7 +41,7 @@ namespace ProyectoDiWork.Modelos
         /// Tipo de automovil
         /// </summary>
         [Required]
-        public string Tipo { get; set; }
+        public int Tipo { get; set; }
         /// <summary>
         /// Cantidad de puertas del automovil
         /// </summary>
