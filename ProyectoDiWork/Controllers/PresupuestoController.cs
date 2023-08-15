@@ -61,6 +61,60 @@ namespace ProyectoDiWork.Controllers
             return Ok(respuesta);
         }
 
+        /// <summary>
+        /// Calcula el promedio total de presupuestos por marca
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <returns></returns>
+        [HttpGet("PromedioTotalMarca")]
+        [ProducesResponseType(typeof(PreTotalMarcaModelo), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPromedioTotalPorMarca([FromQuery] string marca)
+        {
+            if (marca == null || marca == "")
+                return BadRequest("Marca requerida");
+
+            PreTotalMarcaModelo respuesta = new PreTotalMarcaModelo();
+
+            respuesta = await PresupuestoBL.ObtenerPromedioTotalPorMarca(marca);
+
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Calcula el promedio total de presupuestos por modelo
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        [HttpGet("PromedioTotalModelo")]
+        [ProducesResponseType(typeof(PreTotalMarcaModelo), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPromedioTotalPorModelo([FromQuery] string modelo)
+        {
+            if (modelo == null || modelo == "")
+                return BadRequest("Modelo requerido");
+
+            PreTotalMarcaModelo respuesta = new PreTotalMarcaModelo();
+
+            respuesta = await PresupuestoBL.ObtenerPromedioTotalPorModelo(modelo);
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Sumatoria del Monto Total de Presupuestos para Autos y para Motos
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("TotalesAutosMotos")]
+        [ProducesResponseType(typeof(Dictionary<string, decimal>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTotalesAutosMotos()
+        {
+            Dictionary<string, decimal> respuesta = new Dictionary<string, decimal>();
+
+            respuesta = await PresupuestoBL.ObtenerTotalesAutosMotos();
+
+            return Ok(respuesta);
+        }
+
         #endregion
 
         #region ESCRITURA

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using ProyectoDiWork.Funciones;
 
 namespace ProyectoDiWork.DataBase
 {
@@ -120,6 +121,84 @@ namespace ProyectoDiWork.DataBase
             }
         }
 
+        /// <summary>
+        /// Lista totales de presupuesto por Marca/Modelo
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static List<PreTotalMarcaModelo> spPresupuestoListarPorMarcaModelo(string marca = null, string modelo = null)
+        {
+            try
+            {
+                List<PreTotalMarcaModelo> resultado = new List<PreTotalMarcaModelo>();
+
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spPresupuestoListarPorMarcaModelo";
+
+                if (marca != null && marca != "")
+                    comando.Parameters.AddWithValue("@Marca", marca);
+                if (modelo != null && modelo != "")
+                    comando.Parameters.AddWithValue("@Modelo", modelo);
+
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        PreTotalMarcaModelo data = new PreTotalMarcaModelo();
+                        data.Marca = dr["Marca"].ToString();
+                        data.Modelo = dr["Modelo"].ToString();
+                        data.Total = Convert.ToDecimal(dr["Total"]);
+
+                        resultado.Add(data);
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar el sp spPresupuestoListarPorMarcaModelo: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// ejecuta spPresupuestoTotalesAutosMotos
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Dictionary<string, decimal> spPresupuestoTotalesAutosMotos()
+        {
+            try
+            {
+                Dictionary<string, decimal> resultado = new Dictionary<string, decimal>();
+
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spPresupuestoTotalesAutosMotos";
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        resultado.Add(dr["vehiculo"].ToString(), Convert.ToDecimal(dr["total"]));
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar el sp spPresupuestoTotalesAutosMotos: " + ex.Message);
+            }
+        }
 
         #endregion
         #region ESCRITURA

@@ -64,4 +64,24 @@
         /// </summary>
         public Moto Moto { get; set; }
     }
+
+    /// <summary>
+    /// Clase para calcular Promedio monto total por Marca/Modelo
+    /// </summary>
+    public class PreTotalMarcaModelo
+    {
+        /// <summary>
+        /// Marca
+        /// </summary>
+        public string Marca { get; set; }
+        /// <summary>
+        /// Modelo
+        /// </summary>
+        public string Modelo { get; set; }
+        /// <summary>
+        /// Total
+        /// </summary>
+        public decimal Total { get; set; }
+
+    }
 }

@@ -44,6 +44,76 @@ namespace ProyectoDiWork.Funciones
             return resultado;
         }
 
+        /// <summary>
+        /// Calcula promedio de totales por marca
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <returns></returns>
+        public static async Task<PreTotalMarcaModelo> ObtenerPromedioTotalPorMarca(string marca)
+        {
+            List<PreTotalMarcaModelo> totales = new List<PreTotalMarcaModelo>();
+
+            await Task.Run(() => totales = PresupuestoDB.spPresupuestoListarPorMarcaModelo(marca));
+
+            decimal totalPre = 0;
+            decimal factor = 1.10m;  // 10% de ganancia del taller
+
+            foreach (PreTotalMarcaModelo tot in totales)
+            {
+                totalPre += (tot.Total * factor);
+            }
+
+            PreTotalMarcaModelo resultado = new PreTotalMarcaModelo() 
+            {
+                Marca = marca,
+                Modelo = "N/A",
+                Total = (totalPre / totales.Count())
+            };
+
+            return resultado;
+        }
+
+        /// <summary>
+        /// Calcula promedio de totales por modelo
+        /// </summary>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
+        public static async Task<PreTotalMarcaModelo> ObtenerPromedioTotalPorModelo(string modelo)
+        {
+            List<PreTotalMarcaModelo> totales = new List<PreTotalMarcaModelo>();
+
+            await Task.Run(() => totales = PresupuestoDB.spPresupuestoListarPorMarcaModelo(null, modelo));
+
+            decimal totalPre = 0;
+            decimal factor = 1.10m; // 10% de ganancia del taller
+
+            foreach (PreTotalMarcaModelo tot in totales)
+            {
+                totalPre += (tot.Total * factor);
+            }
+
+            PreTotalMarcaModelo resultado = new PreTotalMarcaModelo()
+            {
+                Marca = totales[0].Marca,
+                Modelo = modelo,
+                Total = (totalPre / totales.Count())
+            };
+
+            return resultado;
+        }
+
+        /// <summary>
+        /// Total de Presupuestos para Autos y para Motos
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<Dictionary<string, decimal>> ObtenerTotalesAutosMotos()
+        {
+            Dictionary<string, decimal> resultado = new Dictionary<string, decimal>();
+
+            await Task.Run(() => { resultado = PresupuestoDB.spPresupuestoTotalesAutosMotos(); });
+
+            return resultado;
+        }
 
         #endregion
 
