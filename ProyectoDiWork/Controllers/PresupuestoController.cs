@@ -48,6 +48,27 @@ namespace ProyectoDiWork.Controllers
         /// <summary>
         /// Obtiene presupuesto mediante Id
         /// </summary>
+        /// <param name="presupuestoId"></param>
+        /// <param name="vehiculoId"></param>
+        /// <param name="enviarCorreo"></param>
+        /// <returns></returns>
+        [HttpGet("Detalle")]
+        [ProducesResponseType(typeof(PresupuestoDetalle), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDetallePresupesto([FromQuery] int? presupuestoId = null, [FromQuery] int? vehiculoId = null, bool enviarCorreo = false)
+        {
+            if (presupuestoId == null && vehiculoId == null)
+                return BadRequest("id del presupuesto o vehiculo requerido");
+
+            PresupuestoDetalle respuesta = new PresupuestoDetalle();
+
+            respuesta = await PresupuestoBL.ObtenerPresupuestoDetalle(presupuestoId, vehiculoId);
+
+            return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Obtiene presupuesto mediante Id
+        /// </summary>
         /// <param name="vehiculoIds">Se listan todos los presupuesto en caso de lista de ids vacía</param>
         /// <returns></returns>
         [HttpPost("Listar")]

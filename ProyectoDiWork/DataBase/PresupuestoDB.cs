@@ -68,6 +68,58 @@ namespace ProyectoDiWork.DataBase
         /// <summary>
         /// Ejecuta spObtenerPresupuesto
         /// </summary>
+        /// <param name="presupuestoId"></param>
+        /// <param name="idVehiculo"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static PresupuestoDetalle spPresupuestoDetalleObtener(int? presupuestoId = null, int? idVehiculo = null)
+        {
+            try
+            {
+                PresupuestoDetalle resultado = null;
+
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.CommandText = "spPresupuestoDetalleObtener";
+                if (presupuestoId != null && presupuestoId > 0)
+                    comando.Parameters.AddWithValue("@presupuestoId", presupuestoId);
+                if (idVehiculo != null && idVehiculo > 0)
+                    comando.Parameters.AddWithValue("@idVehiculo", idVehiculo);
+
+
+                DataSet ds = DataBase.EjecutarConsulta(comando);
+
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    resultado = new PresupuestoDetalle();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        resultado.Id = Convert.ToInt32(dr["presupuestoId"]);
+                        resultado.Nombre = dr["Nombre"].ToString();
+                        resultado.Apellido = dr["Apellido"].ToString();
+                        resultado.EMail = dr["EMail"].ToString();
+                        resultado.idVehiulo = Convert.ToInt32(dr["idVehiculo"]);
+                        resultado.Total = Convert.ToDecimal(dr["Total"]) * 1.10m;
+                        resultado.Marca = dr["Marca"].ToString();
+                        resultado.Modelo = dr["Modelo"].ToString();
+                        resultado.Patente = dr["Patente"].ToString();
+
+                        if (dr["Desperfectos"] != DBNull.Value)
+                            resultado.Desperfectos = JsonConvert.DeserializeObject<List<Desperfecto>>(dr["Desperfectos"].ToString());
+                    }
+                }
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar el sp spPresupuestoDetalleObtener: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Ejecuta spObtenerPresupuesto
+        /// </summary>
         /// <param name="vehiculosIds"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>

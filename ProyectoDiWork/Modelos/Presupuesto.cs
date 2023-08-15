@@ -1,4 +1,6 @@
-﻿namespace ProyectoDiWork.Modelos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProyectoDiWork.Modelos
 {
     /// <summary>
     /// Presupuesto de la reparacion
@@ -83,5 +85,24 @@
         /// </summary>
         public decimal Total { get; set; }
 
+    }
+
+    /// <summary>
+    /// Clase para detalle de presupuesto
+    /// </summary>
+    public class PresupuestoDetalle : Presupuesto
+    {
+        /// <summary>
+        /// Marca del vehiculo
+        /// </summary>
+        public string Marca { get; set; }
+        /// <summary>
+        /// Modelo del vehiculo
+        /// </summary>
+        public string Modelo { get; set; }
+        /// <summary>
+        /// Patente de vehiculo
+        /// </summary>
+        public string Patente { get; set; }
     }
 }

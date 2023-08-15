@@ -28,6 +28,24 @@ namespace ProyectoDiWork.Funciones
         }
 
         /// <summary>
+        /// Obtiene detalle de presupuesto mediante id
+        /// </summary>
+        /// <param name="presupuestoId"></param>
+        /// <param name="vehiculoId"></param>
+        /// <returns></returns>
+        public static async Task<PresupuestoDetalle> ObtenerPresupuestoDetalle(int? presupuestoId = null, int? vehiculoId = null)
+        {
+            PresupuestoDetalle resultado = new PresupuestoDetalle();
+
+            await Task.Run(() =>
+            {
+                resultado = PresupuestoDB.spPresupuestoDetalleObtener(presupuestoId, vehiculoId);
+            });
+
+            return resultado;
+        }
+
+        /// <summary>
         /// Lista de presupueusto. En caso de lista de ids vacía -> lista todos los presupuestos
         /// </summary>
         /// <param name="vehiculosIds"></param>
