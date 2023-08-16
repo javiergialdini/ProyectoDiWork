@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Abstractions;
+﻿using DinkToPdf.Contracts;
+using DinkToPdf;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.OpenApi.Models;
@@ -34,6 +36,7 @@ namespace ProyectoDiWork
             services.AddControllers();
 
             services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions() { SizeLimit = 102400 }));
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen( c =>

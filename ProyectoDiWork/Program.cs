@@ -19,6 +19,8 @@ namespace ProyectoDiWork
         public static void Main(string[] args)
         {
             //CreateHostBuilder(args).Build().Run();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
             var host = WebHost.CreateDefaultBuilder(args)
              .UseStartup<Startup>()
              .Build();

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using ProyectoDiWork.Funciones;
 using ProyectoDiWork.Modelos;
 
@@ -15,16 +18,20 @@ namespace ProyectoDiWork.Controllers
     public class PresupuestoController : ControllerBase
     {
         private IMemoryCache _cache;
+        private readonly IConverter _pdfConverter;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="cache"></param>
-        public PresupuestoController([FromServices] IMemoryCache cache)
+        /// <param name="pdfConverter"></param>
+        public PresupuestoController([FromServices] IMemoryCache cache, [FromServices] IConverter pdfConverter)
         {
             _cache = cache;
+            _pdfConverter = pdfConverter;
         }
 
         #region LECTURA
+
         /// <summary>
         /// Obtiene presupuesto mediante Id
         /// </summary>
@@ -54,7 +61,7 @@ namespace ProyectoDiWork.Controllers
         /// <returns></returns>
         [HttpGet("Detalle")]
         [ProducesResponseType(typeof(PresupuestoDetalle), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetDetallePresupesto([FromQuery] int? presupuestoId = null, [FromQuery] int? vehiculoId = null, bool enviarCorreo = false)
+        public async Task<IActionResult> GetDetallePresupesto([FromQuery] int? presupuestoId = null, [FromQuery] int? vehiculoId = null)
         {
             if (presupuestoId == null && vehiculoId == null)
                 return BadRequest("id del presupuesto o vehiculo requerido");
@@ -64,6 +71,27 @@ namespace ProyectoDiWork.Controllers
             respuesta = await PresupuestoBL.ObtenerPresupuestoDetalle(presupuestoId, vehiculoId);
 
             return Ok(respuesta);
+        }
+
+        /// <summary>
+        /// Descarga PDF Presupuesto
+        /// </summary>
+        /// <param name="presupuestoId"></param>
+        /// <param name="vehiculoId"></param>
+        /// <param name="enviarCorreo"></param>
+        /// <returns></returns>
+        [HttpGet("DetallePDF")]
+        [ProducesResponseType(typeof(PresupuestoDetalle), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDetallePDFPresupesto([FromQuery] int? presupuestoId = null, [FromQuery] int? vehiculoId = null)
+        {
+            if (presupuestoId == null && vehiculoId == null)
+                return BadRequest("id del presupuesto o vehiculo requerido");
+
+            MemoryStream respuesta = new MemoryStream();
+
+            respuesta = await PresupuestoBL.GenerarPdfPresupesto(presupuestoId, vehiculoId);
+
+            return File(respuesta, "application/pdf", "tabla.pdf");
         }
 
         /// <summary>

@@ -99,7 +99,7 @@ namespace ProyectoDiWork.DataBase
                         resultado.Apellido = dr["Apellido"].ToString();
                         resultado.EMail = dr["EMail"].ToString();
                         resultado.idVehiulo = Convert.ToInt32(dr["idVehiculo"]);
-                        resultado.Total = Convert.ToDecimal(dr["Total"]) * 1.10m;
+                        resultado.Total = Convert.ToDecimal(dr["Total"]);
                         resultado.Marca = dr["Marca"].ToString();
                         resultado.Modelo = dr["Modelo"].ToString();
                         resultado.Patente = dr["Patente"].ToString();
