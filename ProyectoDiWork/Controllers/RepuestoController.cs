@@ -83,6 +83,9 @@ namespace ProyectoDiWork.Controllers
 
             RepuestoPorModelo respuesta = await RepuestoBL.ObtenerMayorPorModelo(modelo);
 
+            if (respuesta == null)
+                return BadRequest("Sin registro");
+
             return Ok(respuesta);
         }
 
@@ -100,7 +103,7 @@ namespace ProyectoDiWork.Controllers
         }
 
         /// <summary>
-        /// Obtiene el repuesto mas utilizado para el modelo
+        /// Obtiene el repuesto mas utilizado para la mara
         /// </summary>
         /// <param name="marca"></param>
         /// <returns></returns>
@@ -112,6 +115,9 @@ namespace ProyectoDiWork.Controllers
                 return BadRequest("Marca requerido");
 
             RepuestoPorMarca respuesta = await RepuestoBL.ObtenerMayorPorMarca(marca);
+
+            if (respuesta == null)
+                return BadRequest("Sin registro");
 
             return Ok(respuesta);
         }
@@ -125,6 +131,9 @@ namespace ProyectoDiWork.Controllers
         public async Task<IActionResult> ListarMayorPorMarca()
         {
             List<RepuestoPorMarca> respuesta = await RepuestoBL.ListarMayorPorMarca();
+
+            if (respuesta == null)
+                return BadRequest("Sin registro");
 
             return Ok(respuesta);
         }

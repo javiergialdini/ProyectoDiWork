@@ -44,6 +44,11 @@ namespace ProyectoDiWork.Funciones
                 resultado = PresupuestoDB.spPresupuestoDetalleObtener(presupuestoId, vehiculoId);
             });
 
+            if (resultado == null)
+            {
+                throw new Exception();
+            }
+
             //Le sumo el 10% de recargo
             resultado.Total = resultado.Total * 1.10m;
 
@@ -64,6 +69,11 @@ namespace ProyectoDiWork.Funciones
             {
                 resultado = PresupuestoDB.spPresupuestoDetalleObtener(presupuestoId, vehiculoId);
             });
+
+            if(resultado == null)
+            {
+                throw new Exception();
+            }
 
             var document = new PdfDocument();
             var page = document.AddPage();
@@ -182,12 +192,15 @@ namespace ProyectoDiWork.Funciones
                 totalPre += (tot.Total * factor);
             }
 
-            PreTotalMarcaModelo resultado = new PreTotalMarcaModelo() 
+            PreTotalMarcaModelo resultado = null;
+
+            if (totales != null && totales.Count() > 0)
             {
-                Marca = marca,
-                Modelo = "N/A",
-                Total = (totalPre / totales.Count())
-            };
+                resultado = new PreTotalMarcaModelo();
+                resultado.Marca = marca;
+                resultado.Modelo = "N/A";
+                resultado.Total = (totalPre / totales.Count());
+            }
 
             return resultado;
         }
@@ -211,12 +224,19 @@ namespace ProyectoDiWork.Funciones
                 totalPre += (tot.Total * factor);
             }
 
-            PreTotalMarcaModelo resultado = new PreTotalMarcaModelo()
+            PreTotalMarcaModelo resultado = null;
+
+            if (totales != null && totales.Count() > 0)
             {
-                Marca = totales[0].Marca,
-                Modelo = modelo,
-                Total = (totalPre / totales.Count())
-            };
+                resultado = new PreTotalMarcaModelo()
+                {
+                    Marca = totales[0].Marca,
+                    Modelo = modelo,
+                    Total = (totalPre / totales.Count())
+                };
+
+            }
+
 
             return resultado;
         }

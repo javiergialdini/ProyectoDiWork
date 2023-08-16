@@ -48,6 +48,10 @@ namespace ProyectoDiWork.Controllers
             Presupuesto respuesta = new Presupuesto();
 
             respuesta = await PresupuestoBL.ObtenerPresupuesto(presupuestoId, vehiculoId);
+            
+            if(respuesta == null)
+                return BadRequest("Presupuesto no encontrado");
+            
 
             return Ok(respuesta);
         }
@@ -57,7 +61,6 @@ namespace ProyectoDiWork.Controllers
         /// </summary>
         /// <param name="presupuestoId"></param>
         /// <param name="vehiculoId"></param>
-        /// <param name="enviarCorreo"></param>
         /// <returns></returns>
         [HttpGet("Detalle")]
         [ProducesResponseType(typeof(PresupuestoDetalle), StatusCodes.Status200OK)]
@@ -68,7 +71,15 @@ namespace ProyectoDiWork.Controllers
 
             PresupuestoDetalle respuesta = new PresupuestoDetalle();
 
-            respuesta = await PresupuestoBL.ObtenerPresupuestoDetalle(presupuestoId, vehiculoId);
+
+            try
+            {
+                respuesta = await PresupuestoBL.ObtenerPresupuestoDetalle(presupuestoId, vehiculoId);
+            }
+            catch
+            {
+                return BadRequest("Presupuesto no encontrado");
+            }
 
             return Ok(respuesta);
         }
@@ -78,7 +89,6 @@ namespace ProyectoDiWork.Controllers
         /// </summary>
         /// <param name="presupuestoId"></param>
         /// <param name="vehiculoId"></param>
-        /// <param name="enviarCorreo"></param>
         /// <returns></returns>
         [HttpGet("DetallePDF")]
         [ProducesResponseType(typeof(PresupuestoDetalle), StatusCodes.Status200OK)]
@@ -89,7 +99,14 @@ namespace ProyectoDiWork.Controllers
 
             MemoryStream respuesta = new MemoryStream();
 
-            respuesta = await PresupuestoBL.GenerarPdfPresupesto(presupuestoId, vehiculoId);
+            try
+            {
+                respuesta = await PresupuestoBL.GenerarPdfPresupesto(presupuestoId, vehiculoId);
+            }
+            catch
+            {
+                return BadRequest("Presupuesto no encontrado");
+            }
 
             return File(respuesta, "application/pdf", "tabla.pdf");
         }
@@ -126,6 +143,8 @@ namespace ProyectoDiWork.Controllers
 
             respuesta = await PresupuestoBL.ObtenerPromedioTotalPorMarca(marca);
 
+            if (respuesta == null)
+                return BadRequest("Sin registro");
 
             return Ok(respuesta);
         }
@@ -146,6 +165,9 @@ namespace ProyectoDiWork.Controllers
 
             respuesta = await PresupuestoBL.ObtenerPromedioTotalPorModelo(modelo);
 
+            if (respuesta == null)
+                return BadRequest("Sin registro");
+
             return Ok(respuesta);
         }
 
@@ -160,6 +182,9 @@ namespace ProyectoDiWork.Controllers
             Dictionary<string, decimal> respuesta = new Dictionary<string, decimal>();
 
             respuesta = await PresupuestoBL.ObtenerTotalesAutosMotos();
+
+            if (respuesta == null)
+                return BadRequest("Sin registro");
 
             return Ok(respuesta);
         }
