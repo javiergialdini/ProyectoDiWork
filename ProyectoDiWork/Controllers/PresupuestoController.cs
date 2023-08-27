@@ -1,4 +1,5 @@
 ﻿using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using PdfSharp.Drawing;
@@ -14,6 +15,7 @@ namespace ProyectoDiWork.Controllers
     [ApiVersion("1.0")]
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class PresupuestoController : ControllerBase
     {

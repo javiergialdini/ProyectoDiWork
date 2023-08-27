@@ -5,6 +5,12 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ProyectoDiWork.Identity.Services;
 
 namespace ProyectoDiWork
 {
@@ -38,6 +44,29 @@ namespace ProyectoDiWork
             services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions() { SizeLimit = 102400 }));
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration["ApiAuth:SecretKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            services.AddAuthorization();
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen( c =>
             {
@@ -48,6 +77,14 @@ namespace ProyectoDiWork
                 c.IncludeXmlComments(xmlPath);
 
             });
+
+            services.AddIdentityCore<IdentityUser>()
+                        .AddDefaultTokenProviders();
+
+            services.AddScoped<IAuthService, AuthService>();
+
+
+
         }
 
         /// <summary>
@@ -68,6 +105,7 @@ namespace ProyectoDiWork
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
