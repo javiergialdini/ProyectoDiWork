@@ -42,7 +42,7 @@ namespace ProyectoDiWork.Identity.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claims,
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = tokenCredentials
             };
 

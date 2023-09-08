@@ -1,9 +1,9 @@
-﻿using ProyectoDiWork.DataBase;
-using ProyectoDiWork.Modelos;
-using PdfSharp.Drawing;
+﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using Modelos.Modelos;
+using DataBase.DataBase;
 
-namespace ProyectoDiWork.Funciones
+namespace BusinessLogic.Funciones
 {
     /// <summary>
     /// PresupuestoBL
@@ -17,7 +17,7 @@ namespace ProyectoDiWork.Funciones
         /// <param name="presupuestoId"></param>
         /// <param name="vehiculoId"></param>
         /// <returns></returns>
-        public static async Task<Presupuesto> ObtenerPresupuesto(int? presupuestoId = null, int? vehiculoId = null)
+        public static async Task<Modelos.Modelos.Presupuesto> ObtenerPresupuesto(int? presupuestoId = null, int? vehiculoId = null)
         {
             Presupuesto resultado = new Presupuesto();
 

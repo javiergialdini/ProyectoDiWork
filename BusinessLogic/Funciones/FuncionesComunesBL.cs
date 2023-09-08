@@ -1,6 +1,6 @@
-﻿using ProyectoDiWork.Modelos;
+﻿using Modelos.Modelos;
 
-namespace ProyectoDiWork.Funciones
+namespace BusinessLogic.Funciones
 {
     /// <summary>
     /// Clase para almacenar funciones comunes
@@ -44,6 +44,8 @@ namespace ProyectoDiWork.Funciones
             {
                 return true;
             }
+            
+
             return false;
         }
 

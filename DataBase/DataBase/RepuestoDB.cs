@@ -1,10 +1,9 @@
-﻿using ProyectoDiWork.Funciones;
-using ProyectoDiWork.Modelos;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using Modelos.Modelos;
 
-namespace ProyectoDiWork.DataBase
+namespace DataBase.DataBase
 {
     /// <summary>
     /// class RepuestoDB

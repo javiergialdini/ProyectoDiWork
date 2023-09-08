@@ -43,6 +43,11 @@ namespace ProyectoDiWork.Controllers
             return Ok(resultAuth);
         }
 
+        /// <summary>
+        /// Get refresh Token
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("ObtenerRefreshToken")]
         public async Task<IActionResult> GetRefreshToken([FromBody] RefreshTokenRequest request)
         {

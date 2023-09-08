@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using ProyectoDiWork.Funciones;
-using ProyectoDiWork.Modelos;
+using Modelos.Modelos;
+using BusinessLogic.Funciones;
 using System.Diagnostics;
 
 namespace ProyectoDiWork.Controllers

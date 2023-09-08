@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProyectoDiWork.Modelos
+namespace Modelos.Modelos
 {
     /// <summary>
     /// Presupuesto de la reparacion

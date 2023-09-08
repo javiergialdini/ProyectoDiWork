@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace ProyectoDiWork.DataBase
+namespace DataBase.DataBase
 {
     /// <summary>
     /// class DataBase

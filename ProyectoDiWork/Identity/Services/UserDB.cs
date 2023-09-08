@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using ProyectoDiWork.Modelos;
+using Modelos.Modelos;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -26,7 +26,7 @@ namespace ProyectoDiWork.Identity.Services
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = $"Select u.IdUsuario, u.UserName, u.Password from Usuario u where u.UserName = '{user.UserName}' and u.Password = '{user.Password}'";
 
-                DataSet ds = DataBase.DataBase.EjecutarConsulta(command);
+                DataSet ds = DataBase.DataBase.DataBase.EjecutarConsulta(command);
 
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -67,7 +67,7 @@ namespace ProyectoDiWork.Identity.Services
                 command.CommandType = System.Data.CommandType.Text;
                 command.CommandText = $"SELECT IdHistorialToken, IdUsuario, Token, RefreshToken, FechaCreacion, FechaExpiracion, EsActivo FROM HistorialRefreshToken WHERE Token = '{refreshTokenRequest.TokenExpirado}' AND RefreshToken = '{refreshTokenRequest.RefreshToken}' AND IdUsuario = {idUsuario}";
 
-                DataSet ds = DataBase.DataBase.EjecutarConsulta(command);
+                DataSet ds = DataBase.DataBase.DataBase.EjecutarConsulta(command);
 
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
@@ -116,7 +116,7 @@ namespace ProyectoDiWork.Identity.Services
                 comando.Parameters.AddWithValue("@FechaCreacion", historialRefreshToken.FechaCreacion);
                 comando.Parameters.AddWithValue("@FechaExpiracion", historialRefreshToken.FechaExpiracion);
 
-                DataSet ds = DataBase.DataBase.EjecutarConsulta(comando);
+                DataSet ds = DataBase.DataBase.DataBase.EjecutarConsulta(comando);
 
                 return true;
             }

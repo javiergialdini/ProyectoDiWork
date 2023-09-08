@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
-using ProyectoDiWork.Funciones;
-using ProyectoDiWork.Modelos;
+using Modelos.Modelos;
+using BusinessLogic.Funciones;
 
 namespace ProyectoDiWork.Controllers
 {
@@ -119,7 +119,7 @@ namespace ProyectoDiWork.Controllers
         /// <param name="vehiculoIds">Se listan todos los presupuesto en caso de lista de ids vacía</param>
         /// <returns></returns>
         [HttpPost("Listar")]
-        [ProducesResponseType(typeof(List<Presupuesto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Modelos.Modelos.Presupuesto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListarPresupuestosVehiculos([FromBody] List<int> vehiculoIds)
         {
             List<Presupuesto> respuesta = new List<Presupuesto>();

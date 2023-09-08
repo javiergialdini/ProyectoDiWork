@@ -1,17 +1,14 @@
-﻿using ProyectoDiWork.Modelos;
+﻿using Modelos.Modelos;
 using System.Data.SqlClient;
 using System.Data;
-using Microsoft.Extensions.Caching.Memory;
 
-namespace ProyectoDiWork.DataBase
+namespace DataBase.DataBase
 {
     /// <summary>
     /// DesperfectosBL
     /// </summary>
     public class DesperfectosDB
     {
-        private static IMemoryCache _cache;
-
         /// <summary>
         /// Ejecuta sp para guardar desperfecto con los repuestos de un presupuesto
         /// </summary>
@@ -20,7 +17,7 @@ namespace ProyectoDiWork.DataBase
         /// <exception cref="Exception"></exception>
         public static void GuardarDesperfectoRepuestos(Desperfecto desperfecto, int presupuestoId)
         {
-            _cache = Program.ServiceProvider.GetService<IMemoryCache>();
+
             try
             {
                 SqlCommand comando = new SqlCommand();
@@ -45,12 +42,6 @@ namespace ProyectoDiWork.DataBase
                         r["id"] = repuesto.Id;
                         r["Nombre"] = repuesto.Nombre;
                         r["Precio"] = repuesto.Precio;
-
-                        // Borro cache si ingresa un repuesto con id 0 (nuevo)
-                        if(repuesto.Id == 0)
-                        {
-                            _cache.Remove("repuestosCache");
-                        }
 
                         dtRepuestos.Rows.Add(r);
                     }

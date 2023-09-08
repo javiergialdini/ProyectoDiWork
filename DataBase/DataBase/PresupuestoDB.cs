@@ -1,14 +1,13 @@
-﻿using ProyectoDiWork.Modelos;
+﻿using Modelos.Modelos;
 using System.Data;
 using System.Data.SqlClient;
-using static ProyectoDiWork.Modelos.Enumerados;
+using static Modelos.Modelos.Enumerados;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-using ProyectoDiWork.Funciones;
 
-namespace ProyectoDiWork.DataBase
+namespace DataBase.DataBase
 {
     /// <summary>
     /// PresupuestoDB

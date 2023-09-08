@@ -1,7 +1,7 @@
-﻿using ProyectoDiWork.DataBase;
-using ProyectoDiWork.Modelos;
+﻿using DataBase.DataBase;
+using Modelos.Modelos;
 
-namespace ProyectoDiWork.Funciones
+namespace BusinessLogic.Funciones
 {
     /// <summary>
     /// class RepuestoBL

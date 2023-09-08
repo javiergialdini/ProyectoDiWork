@@ -23,4 +23,10 @@
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\DataBase\DataBase.csproj" />
+    <ProjectReference Include="..\Modelos\Modelos.csproj" />
+  </ItemGroup>
+
 </Project>
